@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.css' rel='stylesheet' />
+  <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
+  <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css"/>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+  <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+
+      .pic_sls {
+        width:200px;
+        margin-left: 25px;
+        margin-right: 25px;
+        content: ""
+      }
+      .slick-prev:before, .slick-next:before {
+        color: rgba(0,0,0,0.5);
+      }
+    </style>
+</head>
+<body>
+  <div id='map' ></div>
+  <script>
+
+
+
+    var pics = [
+      [
+        "https://4.bp.blogspot.com/-ixYUe3cp19o/WWJY15kaFlI/AAAAAAAAABQ/uutgKrSjY7kvdUXKMMOCVbUWok4dvQd3QCLcBGAs/s1600/DSC_9275.JPG", 
+        "https://3.bp.blogspot.com/-i15dBjBd1Rs/WWJY2VJeh2I/AAAAAAAAABU/jfrxzfXhrh0JFoI0Kp7RrEtXONfoSwElACLcBGAs/s1600/DSC_9255.JPG", 
+        "https://3.bp.blogspot.com/-3idlCinxZEc/WWI8gTCaNaI/AAAAAAAAAAo/NXwrmVjAhuctNQstVUmFMNIVfLPrkez0gCLcBGAs/s1600/DSC_9240.JPG"
+      ], //id=0
+      [
+        "https://1.bp.blogspot.com/-0O817KPEDzs/WWJZCXBAOqI/AAAAAAAAABg/qdUbpCic5E0fP0MYffXolzxNs9c9KRXDQCLcBGAs/s1600/IMG_9500.JPG", 
+        "https://4.bp.blogspot.com/-R9KQqYv-H3A/WWJZCJ89TiI/AAAAAAAAABc/Pb_JBpo4Re8qYXR7hSTjsUDTrNdDkwW4gCLcBGAs/s1600/IMG_9497.JPG",
+        "https://3.bp.blogspot.com/-yJfEVVyP7as/WWJZA7oTnzI/AAAAAAAAABY/d1xkr2FpVx4b3mrvepUqA14J40NNWGuNwCLcBGAs/s1600/IMG_9502.JPG"
+      ], //id=1
+      [
+        "https://3.bp.blogspot.com/-Gy4nWS9fKdc/VruoNWCWJfI/AAAAAAAAAEY/BDDH2zBJI7A/s1600/447628.JPG"
+      ], //id=2
+      [
+        "https://4.bp.blogspot.com/-yjDGEsyReDc/Vrct-ABxoAI/AAAAAAAAAEI/rUkLuvZ2mlM/s1600/IMG_7322.JPG"
+      ], //id=3
+      [
+        "https://3.bp.blogspot.com/-YlZLDpccDg8/VruoNk81PCI/AAAAAAAAAEc/UFIUhOIFerU/s1600/12002756_1665991130304918_2893472064096977058_n.JPG"
+      ], //id=4
+      [
+       "https://vi.ill.in.ua/m/640x0/392641.JPG"
+      ], //id=5
+      [
+       "http://www.khtulhu.org.ua/images/stories/abandons/22.08.2017/08212506.JPG"
+      ], //id=6
+      [
+        "https://1.bp.blogspot.com/-kq7wlWOtog8/Wd-NrpOmTXI/AAAAAAAAADE/x1MkzeX3ToQT78nAb3CAywEbC8A_rKgeACLcBGAs/s1600/%25D1%2588%25D0%25B5%25D0%25B2%25D1%2587%25D0%25B5%25D0%25BD%25D0%25BA%25D0%25BE38.jpg"
+      ], //id=7
+      [
+        "https://2.bp.blogspot.com/-4H2hbAXE0hE/VruoOf3eLRI/AAAAAAAAAEs/b_CrVGbpKII/s1600/IMG_6498.JPG"
+      ],  //id=8
+
+      [
+      "https://vi.ill.in.ua/m/300x140/621286.jpg"
+      ],  //id=9
+
+      [
+      "https://www.shukach.com/sites/default/files/imagecache/node-gallery-display/post_images/14/p1230860-35748.jpg"
+      ],  //id=10
+
+      [
+       "https://2.bp.blogspot.com/-wXtFPngAAAc/Wd-SOWO6RgI/AAAAAAAAADM/ZoBlemcEM6YU6H1fstwfGA_d4_NzDI81wCLcBGAs/s320/%25D0%25BD%25D0%25B5%25D0%25B4%25D0%25BE%25D1%2581%25D1%2582%25D1%2580%25D0%25BE%25D0%25B9.jpg"
+      ],  //id=11
+
+      [
+       "http://old-city.uastorage.com/wp-content/uploads/2011/08/IMG_0718-600x399.jpg"
+      ],  //id=12
+     [
+        "https://4.bp.blogspot.com/-b41-mPlLBzo/Wjbb6KX8BqI/AAAAAAAAAEY/7gImRaLlkvEnlKIqVF6DeB90Z9EMCPwfQCLcBGAs/s1600/photo_2017-12-03_11-11-12%2B%25282%2529.jpg", 
+        "https://2.bp.blogspot.com/-tu4UcWukqPA/Wjbb6dXw3fI/AAAAAAAAAEc/_g7rXIf6CgcL7_kKT65nAU0UPTnX090cgCLcBGAs/s1600/photo_2017-12-03_11-11-12.jpg", 
+        "https://1.bp.blogspot.com/-tJNPetiDPzg/Wjbb6pA80MI/AAAAAAAAAEg/geNYAvYJ7GQS6e5qqKJnRHnmsDucbd1IgCLcBGAs/s1600/photo_2017-12-03_11-11-13.jpg",
+"https://3.bp.blogspot.com/-NHvPNUJu25g/Wjbb65Tv9cI/AAAAAAAAAEk/2e4iJVc9HGgmqWRHor65J3HF2A1_FB7gQCLcBGAs/s1600/photo_2017-12-03_11-11-14.jpg",
+      ], //id=13
+     [
+        "https://2.bp.blogspot.com/-mW8WYyH6AsU/Wjbb4pnJ8wI/AAAAAAAAAEE/A4eafhNZuOcu4ujERjyTncmrT2hRGcJugCLcBGAs/s1600/IMG_3560.JPG", 
+        "https://3.bp.blogspot.com/-t2jJ3PG8l30/Wjbb4gmjtoI/AAAAAAAAAEA/aJ2TkrfHuuII7AdBN76zEyoHmP69YyetwCLcBGAs/s1600/IMG_3559.JPG", 
+        "https://3.bp.blogspot.com/-dO0gtOv7RIQ/Wjbb4glhf-I/AAAAAAAAAEI/Jb28hmAsQpUtIzORtGm3tNJAbwbcJZcDgCLcBGAs/s1600/IMG_3549.JPG"
+      ], //id=14
+      [
+        "https://4.bp.blogspot.com/-sm7CZWvvVEA/Wjbb5c9_tjI/AAAAAAAAAEM/IilPwX5dS8oOTbhR9VA3uZgcFp7J8GPUQCLcBGAs/s1600/image_2017-12-16_21-46-54.png", 
+        "https://4.bp.blogspot.com/-e5z-ejwyw6U/Wjbb54ZxQRI/AAAAAAAAAEQ/ZaCbOxSh0HUBftDlu8emgnNNfqfq6WmNQCLcBGAs/s1600/image_2017-12-16_21-47-13.png"
+      ], //id=15
+    ];
+
+
+
+    mapboxgl.accessToken = 'pk.eyJ1Ijoic2hldmNoZW5rbzQ1IiwiYSI6ImNqMWZnb3NnNjAwMHIyd3J4c29wOHgybzEifQ.J9NgVo7RF1BBhdYIkVKKwQ';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/shevchenko45/cj8lwywy96cs72sn45pim7gi9',
+        // style: 'mapbox://styles/shevchenko45/cj4wo92s23fio2rnukei3ilc8',
+        center: [35.051303, 48.459590],
+        minZoom: 14,
+  maxZoom: 20,
+    });
+    map.on('click', function(e) {
+      var features = map.queryRenderedFeatures(e.point, {
+        layers: ['point0','point'] // replace this with the name of the layer
+      });
+
+      if (!features.length) {
+        return;
+      }
+
+      var feature = features[0];
+      var piclist = pics[feature.properties.id];
+      var picsHTML = `<div class="pic_sls">${piclist.map(x=>"<img width=200 src='"+x+"' />").join("")}</div>`;
+      var popup = new mapboxgl.Popup({ offset: [0, -15] })
+        .setLngLat(feature.geometry.coordinates)
+        .setHTML(`<h3>Name: ${feature.properties.name}</h3>`+
+                 `<p>${feature.properties.description}</p>` +
+                 `<a href=${feature.properties.reference}>More</a>` +
+                 picsHTML)
+        .addTo(map);
+
+      $('.pic_sls').slick({
+        slidesToShow: 1,
+        infinite: true,
+        dots: true
+      });
+    });
+  </script>
+</body>
+</html>
